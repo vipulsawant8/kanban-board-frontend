@@ -1,8 +1,5 @@
 ![Vercel](https://vercelbadge.vercel.app/api/<username>/kanban-frontend)
 ![CI](https://github.com/<username>/kanban-frontend/actions/workflows/vercel-deploy.yml/badge.svg)
-
-# Kanban Task Manager
-
 # Kanban Board — Task Management App
 
 A clean and modular Kanban board built with React, Redux Toolkit, Axios, and Drag & Drop.  
