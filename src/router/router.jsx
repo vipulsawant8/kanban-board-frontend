@@ -16,6 +16,7 @@ const BoardPage = lazy(() => import('@/pages/board/BoardPage.jsx'));
 
 import { ProtectedRoutes } from "@/components/auth";
 
+import NotFound from "@/pages/NotFound.jsx";
 
 const router = createBrowserRouter([
 	{
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
 						element: <Suspense fallback={<PageLoader />}><BoardPage /></Suspense>
 					}
 				]
+			},
+			{
+				path: '*',
+				element: <NotFound />
 			}
 		]
 	}

@@ -21,7 +21,6 @@ const CustomForm = forwardRef(
 		ref
 	)  => {
 
-		console.log("CustomForm render :", name);
 	const {
 		register,
 		handleSubmit,
