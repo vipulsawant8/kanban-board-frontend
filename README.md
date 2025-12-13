@@ -1,4 +1,4 @@
-![Vercel](https://vercelbadge.vercel.app/api/<username>/kanban-frontend)
+![Vercel](https://vercelbadge.vercel.app/api/vipulsawant8/kanban-board-task-management-app-frontend)
 ![CI](https://github.com/<username>/kanban-frontend/actions/workflows/vercel-deploy.yml/badge.svg)
 
 # Kanban Task Manager
