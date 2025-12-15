@@ -174,6 +174,7 @@ const BoardPage = () => {
 			</Row>
 
 			{ loading && <p> Loading lists..... </p> }
+			{ !loading && lists.length ===0 && <h4> No Lists </h4> }
 	</>);
 };
 
