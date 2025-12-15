@@ -33,10 +33,6 @@ const router = createBrowserRouter([
 					{
 						path: "register",
 						element: <Suspense fallback={<PageLoader />}><RegisterPage /></Suspense>
-					},
-					{
-						path: '*',
-						element: <NotFound />
 					}
 				]
 			},
@@ -48,6 +44,10 @@ const router = createBrowserRouter([
 						element: <Suspense fallback={<PageLoader />}><BoardPage /></Suspense>
 					}
 				]
+			},
+			{
+				path: '*',
+				element: <NotFound />
 			}
 		]
 	}
