@@ -5,8 +5,7 @@ import { Container } from "react-bootstrap";
 const AppLayout = () => {
 
 	return ( <> 
-		<NavbarComponent /> 
-		{/* <div className="p-3"> <Outlet /> </div>  */}
+		<NavbarComponent />
 		<Container fluid="md" className="py-3">
 			<Outlet />
 		</Container>

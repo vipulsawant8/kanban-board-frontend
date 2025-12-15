@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectAllLists, fetchLists, createList, reorderList, persistReorderLists } from "@/app/features/lists/listSlice.js";
 import { selectAllTasks, fetchTasks, reorderTaskLocal, persistReorderTasks } from "@/app/features/tasks/taskSlice.js";
 
-import { CustomForm } from "@/components/form";
+// import { CustomForm } from "@/components/form";
 
-import { Container, Row, Col, Card, CardBody, CardTitle } from "react-bootstrap";
+import { Container, Row, Col, Card, CardBody, CardTitle, Modal, ModalBody, ModalHeader, ModalFooter, Button } from "react-bootstrap";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 
 import { ListColumn } from "@/components/lists";
@@ -15,6 +15,7 @@ import { ListColumn } from "@/components/lists";
 import reorderArray from "@/utils/reorder.js";
 
 import { useRef } from "react";
+import { AddList } from "../../components/lists";
 
 const BoardPage = () => {
 
@@ -26,6 +27,8 @@ const BoardPage = () => {
 	const tasks = useSelector(selectAllTasks);
 	
 	const loading = useSelector(state => state.lists.loading);
+
+	const [adding, setAdding] = useState(false);
 
 	useEffect(() => {
 
@@ -108,97 +111,70 @@ const BoardPage = () => {
 		}
 	}, [lists, tasksByList, dispatch]);
 
-	const fields = [
-		{
-			name: "title",
-			label: "List title",
-			type: "text",
-			placeholder: "Enter list title"
-		},
-	];
+	const onHide = () => {
 
-	const listSchema = yup.object({
-		title: yup.string().required("Title is required"),
-	});
-
-	const handleAddList = async (data) => {
-
-		try {
-			const result = await dispatch(createList(data.title)).unwrap();
-			console.log('result :', result);
-
-			formRef.current.resetForm();
-		} catch (error) {
-			console.log("error :", error);
-			window.alert(error || "Add List failed. Please try again.");
-		}
-	};
-
-	const handleError = errors => {
-
-		console.log("errors :", errors);
+		setAdding(false);
 	};
 	
-	return (
-		<Container className="p-4">
-			
-
-			<Container className="py-4">
-			<Row className="justify-content-start">
-				<Col xs={12} sm={10} md={8} lg={6}>
-				<Card className="mt-4 p-3">
-					<CardTitle className="mb-3">
-							Add New List
-						</CardTitle>
-					<CardBody>
-						<CustomForm ref={formRef} fields={fields} onSubmit={handleAddList} onError={handleError} defaultValues={{ title: "" }} submitLabel="Add" name="AddList" />
-					</CardBody>
-				</Card>
+	return (<>
+			<Row>
+				<Col className="d-flex justify-content-end">
+					<Button onClick={()=> setAdding(true)}> Add List </Button>
 				</Col>
 			</Row>
-			</Container>
-			<h2 className="mb-4"> Your Board </h2>
+			
+			 <AddList ref={formRef} show={adding} onHide={onHide} />
 
-			<DragDropContext onDragEnd={onDragEnd}>
-				<Droppable
-					droppableId="board-droppable"
-					direction="horizontal"
-					type="LIST">
-					
-					{(provided) => (
-						
-						<div
-							ref={provided.innerRef}
-							{...provided.droppableProps}
-							style={{display: "flex", gap: 16, alignItems: "flex-start", overflow:"auto"}}>
+			<Row className="mt-3">
+				
+				<h2 className="mb-4"> Your Board </h2>
+					<DragDropContext onDragEnd={onDragEnd}>
+						<Droppable
+							droppableId="board-droppable"
+							direction="horizontal"
+							type="LIST">
 							
-							{lists.map((list, index) => (
-								<Draggable
-									key={list._id}
-									draggableId={String(list._id)}
-									index={index}>
+							{(provided) => (
+								
+								<div
+									ref={provided.innerRef}
+									{...provided.droppableProps}
+									style={{display: "flex", gap: "1rem", alignItems: "flex-start", overflowX: "auto" }}
+									className="hide-scrollbar">
+									{/* > */}
 									
-									{(draggableProvided) => (
-										<div
-											ref={draggableProvided.innerRef}
-											{...draggableProvided.draggableProps}
-											style={{ ...draggableProvided.draggableProps.style, minWidth:300 }}>
-												<div {...draggableProvided.dragHandleProps}>
-													<ListColumn list={list} tasks={tasksByList[list._id] || []} />
+									{lists.map((list, index) => (
+										<Draggable
+											key={list._id}
+											draggableId={String(list._id)}
+											index={index}>
+											
+											{(draggableProvided) => (
+												<div
+													ref={draggableProvided.innerRef}
+													{...draggableProvided.draggableProps}
+													style={{ ...draggableProvided.draggableProps.style, minWidth:300 }}>
+														<div {...draggableProvided.dragHandleProps}>
+															<ListColumn list={list} tasks={tasksByList[list._id] || []} />
+														</div>
 												</div>
-										</div>
-									)}
-								</Draggable>
-							))}
-							{provided.placeholder}
-						</div>
-					)}
-				</Droppable>
-			</DragDropContext>
+											)}
+										</Draggable>
+									))}
+									{provided.placeholder}
+								</div>
+							)}
+						</Droppable>
+					</DragDropContext>
 
-				{ loading && <p> Loading lists..... </p> }
-		</Container>
-	);
+				{/* <small className="text-muted text-center mt-3">
+					Hold <kbd>Shift</kbd> and scroll
+				</small> */}
+
+			</Row>
+
+			{ loading && <p> Loading lists..... </p> }
+	</>);
 };
 
 export default BoardPage;

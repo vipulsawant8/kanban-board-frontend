@@ -11,7 +11,7 @@ import { loginUser } from "@/app/features/auth/authSlice.js";
 const LoginPage = () => {
 
 	const formRef = useRef();
-	const { loading, user } = useSelector((state) => state.auth);
+	const { loading, isAuthenticated } = useSelector((state) => state.auth);
 	
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -33,32 +33,23 @@ const LoginPage = () => {
 	};
 
 	useEffect(() => {
-		if (user) {
+		if (isAuthenticated) {
 			navigate('/board', { replace: true });
-		}}, [user, navigate]);
-
-	// if (user) {
-	// 	navigate('/board', { replace: true });
-	// }
+		}}, [navigate, isAuthenticated]);
 
 	return (
 		<Container className="py-4">
 			<Row className="justify-content-center">
 				<Col xs={12} sm={10} md={6} lg={4}>
-					<Card className="p-3 shadow-sm">
+					<Card className="p-3" style={{ backgroundColor: "#FFFFFF", boxShadow: "0 8px 24px rgba(0,0,0,0.08)", borderRadius: "8px" }}>
 						<CardBody>
-							<CardHeader>
-								<CardTitle className="text-center h1"> <h1> Login Page </h1> </CardTitle>
-							</CardHeader>
-							<CardFooter>
-								<LoginForm 
-									ref={formRef}
-									onSubmit={handleLogin}
-									onError={handleError}
-									loading={loading}
-								/>
-								<div className="mt-4"> New user? click <Link to={'/register'}> here </Link> to register.</div>
-							</CardFooter>
+							<CardTitle className="text-center h1"> <h1> Login Page </h1> </CardTitle>
+							<LoginForm 
+								ref={formRef}
+								onSubmit={handleLogin}
+								onError={handleError}
+								loading={loading} s/>
+							<div className="mt-4"> New user? click <Link to={'/register'}> here </Link> to register.</div>
 						</CardBody>
 					</Card>
 				</Col>

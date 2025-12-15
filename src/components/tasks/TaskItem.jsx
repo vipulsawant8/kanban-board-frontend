@@ -38,17 +38,20 @@ const TaskItem = ({ task }) => {
 	};
 
 	return (
-		<Card className="mb-2">
+		<Card className="mb-2 kanban-task">
 			<CardBody className="p-2">
-				{ !editing ? (<> <div className="d-flex justify-content-between">
-					<strong> {task.title} </strong>
+
+				{ !editing && (<> <div className="d-flex justify-content-between">
+					<strong className="fw-medium"> {task.title} </strong>
 					<div>
 						<Button size="sm" variant="outline-primary" onClick={() => setEditing(true)}> Edit </Button>
 						<Button size="sm" variant="outline-danger" className="ms-2" onClick={handleDelete}> X </Button>
 					</div>
 				</div> 
 				{ task.description && (<div className="text-muted small mt-1"> { task.description } </div>) }
-				</>) : (<><TaskEditForm task={task} onSubmit={handleSave} ref={formRef} /> <Button size="sm" variant="outline-danger" className="mt-2" onClick={() => setEditing(false)}> Cancel </Button> </>) }			
+				</>) }
+				
+				{ editing && (<><TaskEditForm task={task} onSubmit={handleSave} ref={formRef} /> <Button size="sm" variant="outline-danger" className="mt-2" onClick={() => setEditing(false)}> Cancel </Button> </>) }			
 			</CardBody>
 		</Card>
 	);

@@ -6,14 +6,14 @@ import { Card, CardBody, CardTitle, Col, Container, Row, CardHeader, CardFooter 
 import { registerUser, loginUser } from "@/app/features/auth/authSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const RegisterPage = () => {
 
 	const formRef = useRef();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const loading = useSelector((state) => state.auth.loading);
+	const { loading, isAuthenticated } = useSelector((state) => state.auth);
 
 	const handleRegister = async (data) => {
 		
@@ -27,8 +27,6 @@ const RegisterPage = () => {
 			await dispatch(loginUser(payload)).unwrap();
 
 			formRef.current.resetForm();
-
-			navigate('/board', { replace: true });
 		} catch (error) {
 			
 			window.alert(error || "Registration failed. Please try again.");
@@ -39,31 +37,31 @@ const RegisterPage = () => {
 		console.log("Register Form errors :", errors);
 	};
 
-	return (
-		<Container className="py-4">
-			<Row className="justify-content-center">
-				<Col xs={12} sm={10} md={6} lg={4}>
-					<Card className="p-3 shadow-sm">
-						<CardBody>
-							<CardHeader>
-								<CardTitle className="text-center h1"> <h1> Register Page </h1> </CardTitle>
-							</CardHeader>
-							<CardFooter>
-								
-								<RegisterForm 
-									ref={formRef}
-									onSubmit={handleRegister}
-									loading={loading}
-									onError={handleError}
-									/>
-								<div className="mt-4"> Already user? click <Link to={'/login'}> here </Link> to login.</div>
-							</CardFooter>
-						</CardBody>
-					</Card>
-				</Col>
-			</Row>
-		</Container>	
-	 );
+	useEffect(() => {
+
+		if (isAuthenticated) {
+
+			navigate('/board', { replace: true });
+		}
+	}, [isAuthenticated]);
+
+	return ( <Container className="py-4">
+		<Row className="justify-content-center">
+			<Col xs={12} sm={10} md={6} lg={4}>
+				<Card className="p-3" style={{ backgroundColor: "#FFFFFF", boxShadow: "0 8px 24px rgba(0,0,0,0.08)", borderRadius: "8px"  }}>
+					<CardBody>
+						<CardTitle className="text-center h1"> <h1> Register Page </h1> </CardTitle>
+						<RegisterForm 
+							ref={formRef}
+							onSubmit={handleRegister}
+							loading={loading}
+							onError={handleError} />
+						<div className="mt-4"> Already user? click <Link to={'/login'}> here </Link> to login.</div>
+					</CardBody>
+				</Card>
+			</Col>
+		</Row>
+	</Container> );
 };
 
 export default RegisterPage;

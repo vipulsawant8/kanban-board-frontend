@@ -83,7 +83,7 @@ const CustomForm = forwardRef(
 			}
 			)}
 
-			{ !submitInside &&  (<SubmitButton variant="primary" label={submitLabel} name={name} />) }
+			{ !submitInside &&  (<div className="d-flex justify-content-center"> <SubmitButton variant="primary" label={submitLabel} name={name} /> </div>) }
 		</Form> )
 });
 

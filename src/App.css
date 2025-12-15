@@ -1,22 +1,46 @@
 :root {
-  /* Primary brand color */
-  --bs-primary: #3b82f6;
-  --bs-primary-rgb: 59, 130, 246;
-
-  /* Backgrounds */
-  --bs-body-bg: #f2f2f7;
-  --bs-tertiary-bg: #ffffff;
-
-  /* Borders */
-  --bs-border-color: #dee2e6;
-
-  /* Text */
-  --bs-body-color: #212529;
+  --bs-primary: #0d6efd;
 }
 
-.card {
-  transition: 0.2s;
+body{
+  /* background-color: #f1f3f5; */
+  background-color: #F3F4F6;
+  /* background-color: "#F8F9FA"; */
+  color: #212529;
 }
-.card:hover {
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+
+.kanban-list{
+  min-width: 280px;
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgb(0, 0,0, 0.06);
+}
+
+.kanban-list-header{
+  background: #f8f9fa;
+  font-weight: 600;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.kanban-task{
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  cursor: grab;
+}
+
+.kanban-task:hover{
+  background-color: #f8f9fa;
+}
+
+.hide-scrollbar {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE/Edge */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;                /* Chrome, Safari */
 }

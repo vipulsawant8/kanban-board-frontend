@@ -5,7 +5,7 @@ import '@/App.css'
 import { useEffect } from "react";
 import { setLogoutHandler } from "@/app/logoutHandler";
 import { useDispatch } from "react-redux";
-import { logoutUser } from "@/app/features/auth/authSlice";
+import { clearAuth } from "@/app/features/auth/authSlice";
 
 function App() {
 	
@@ -13,7 +13,8 @@ function App() {
 
 	useEffect(() => {
 		setLogoutHandler(() => {
-			dispatch(logoutUser());
+			// dispatch(logoutUser());
+			dispatch(clearAuth());
 		});
 	}, [dispatch]);
 

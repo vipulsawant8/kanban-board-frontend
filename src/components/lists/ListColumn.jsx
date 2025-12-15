@@ -50,8 +50,9 @@ const ListColumn = ({ list, tasks = [] }) => {
 
 	return (
 		
-		<Card className="mb-4 shadow-sm">
-			<CardBody>
+		// <Card className="mb-4 shadow-sm kanban-list">
+		<Card className="kanban-list">
+			<CardBody className="kanban-list-header">
 				{ !editing ? (	<ListHeader title={list.title} onEdit={() => setEditing(true)} onDelete={handleDelete} />	) : (<> <ListEditForm ref={listFormRef} list={list} onSubmit={handleSave} /> 
 				<Button size="sm" variant="outline-danger" className="mt-2" onClick={() => setEditing(false)}>
 					Cancel
