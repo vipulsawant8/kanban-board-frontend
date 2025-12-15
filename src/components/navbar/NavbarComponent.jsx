@@ -13,7 +13,7 @@ const NavbarComponent = () => {
 		<Container fluid>
 			<NavbarBrand style={{fontWeight: 600}} className="text-light"> Live Poll </NavbarBrand>
 			<Nav className="ms-auto align-items-center gap-3">
-				<span className="text-light font-bold"> Welcome, {user.email} </span> && <LogoutButton />
+				<span className="text-light font-bold"> Welcome, {user.name} </span> && <LogoutButton />
 				
 			</Nav>
 		</Container>

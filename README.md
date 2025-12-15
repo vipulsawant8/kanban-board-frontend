@@ -1,5 +1,5 @@
 ![Vercel](https://vercelbadge.vercel.app/api/vipulsawant8/kanban-board-task-management-app-frontend)
-![CI](https://github.com/vipulsawant8/kanban-frontend/actions/workflows/vercel-deploy.yml/badge.svg)
+![CI](https://github.com/vipulsawant8/kanban-board-tasks-manager/actions/workflows/vercel-deploy.yml/badge.svg)
 
 # Kanban Board — Task Management App
 
@@ -106,3 +106,17 @@ VITE_API_URL=http://localhost:4000
 ```sh
 npm run dev
 ```
+
+## Demo Credentials
+
+Use the following demo account to explore the application:
+
+Email: demo.user@kanban.test  
+Password: Demo@1234
+
+⚠️ This account contains only mock data and is reset periodically.
+
+## Notes for Reviewers
+
+This project is intended for demonstration and interview purposes only.
+All data is mock data. No real user information is stored.
