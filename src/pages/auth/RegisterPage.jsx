@@ -7,6 +7,7 @@ import { registerUser, loginUser } from "@/app/features/auth/authSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 
 import { useEffect, useRef } from "react";
+import notify from "../../utils/notify";
 
 const RegisterPage = () => {
 
@@ -16,21 +17,23 @@ const RegisterPage = () => {
 	const { loading, isAuthenticated } = useSelector((state) => state.auth);
 
 	const handleRegister = async (data) => {
-		
-		try {
-			await dispatch(registerUser(data)).unwrap();
+			try {
+				await dispatch(registerUser(data));
+	
+				notify.success("Registered successfully now logging you in");
+	
+				const payload = { identity: data.email, password: data.password };
+	
+				await dispatch(loginUser(payload)).unwrap();
 
-			const payload = { identity: data.email, password: data.password };
-
-			window.alert("Registration successful! Logging you in...");
-
-			await dispatch(loginUser(payload)).unwrap();
-
-			formRef.current.resetForm();
-		} catch (error) {
-			
-			window.alert(error || "Registration failed. Please try again.");
-		}
+				notify.success("Logged-in Successfully");
+	
+				formRef.current.resetForm();
+			} catch (error) {
+				
+				const msg = error || "Registration Failed";
+				notify.error(msg);
+			}
 	};
 
 	const handleError = (errors) => {

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { deleteTask, updateTask } from "@/app/features/tasks/taskSlice.js";
 
 import { TaskEditForm } from "@/components/tasks";
+import DeleteTaskModal from "./DeleteTaskModal";
 
 const TaskItem = ({ task }) => {
 
@@ -25,33 +26,25 @@ const TaskItem = ({ task }) => {
 		}
 	};
 
-	const handleDelete = async () => {
-
-		if (!confirm("Delete this task?")) return;
-
-			try {
-				await dispatch(deleteTask(task._id)).unwrap();
-			} catch (error) {
-				
-				window.alert(error || "Delete failed. Please try again.");
-			}
-	};
+	const [deleting, setDeleting] = useState(false);
 
 	return (
 		<Card className="mb-2 kanban-task">
 			<CardBody className="p-2">
 
+				{deleting && <DeleteTaskModal onHide={() => setDeleting(false)} task={task} show={deleting} />}
+
 				{ !editing && (<> <div className="d-flex justify-content-between">
 					<strong className="fw-medium"> {task.title} </strong>
 					<div>
-						<Button size="sm" variant="outline-primary" onClick={() => setEditing(true)}> Edit </Button>
-						<Button size="sm" variant="outline-danger" className="ms-2" onClick={handleDelete}> X </Button>
+						<Button size="sm" variant="link" className="btn-icon edit-btn" onClick={() => setEditing(true)}> ✎ </Button>
+						<Button size="sm" variant="link" className="ms-2 btn-icon x-btn" onClick={() => setDeleting(true)}> X </Button>
 					</div>
 				</div> 
 				{ task.description && (<div className="text-muted small mt-1"> { task.description } </div>) }
 				</>) }
 				
-				{ editing && (<><TaskEditForm task={task} onSubmit={handleSave} ref={formRef} /> <Button size="sm" variant="outline-danger" className="mt-2" onClick={() => setEditing(false)}> Cancel </Button> </>) }			
+				{ editing && (<div className="d-flex align-items-end"><TaskEditForm task={task} onSubmit={handleSave} ref={formRef} /> <Button size="sm" variant="link" className="mt-2 btn-icon x-btn" onClick={() => setEditing(false)} style={{textDecoration: "none"}}> X </Button> </div>) }			
 			</CardBody>
 		</Card>
 	);

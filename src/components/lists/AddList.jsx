@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Modal, ModalHeader, ModalTitle, ModalBody, ModalFooter, Card, CardTitle, CardBody, Button } from "react-bootstrap";
 import CustomForm from "@/components/form/CustomForm.jsx";
 import { createList } from "@/app/features/lists/listSlice.js";
+import notify from "../../utils/notify";
 
 const AddList = ({ show, onHide, ref }) => {
 	
@@ -25,42 +26,35 @@ const AddList = ({ show, onHide, ref }) => {
 	
 		try {
 			const result = await dispatch(createList(data.title)).unwrap();
-			console.log('result :', result);
+			if (import.meta.env.DEV) console.log('result :', result);
+			
+			notify.success("List Addedd Successfully");
 
 			ref.current.resetForm();
 			onHide();
 		} catch (error) {
-			console.log("error :", error);
-			window.alert(error || "Add List failed. Please try again.");
+			
+			const msg = error || "Add List failed. Please try again.";
+			notify.error(msg);
 		}
 	};
 
 	const handleError = errors => {
-
 		console.log("errors :", errors);
 	};
 
 	return (<Modal show={show} onHide={onHide} centered backdrop="static" keyboard={false}>
 		<ModalHeader closeButton>
-			<ModalTitle>Confirm Action</ModalTitle>
+			<ModalTitle>Add New List</ModalTitle>
 		</ModalHeader>
 
 		<ModalBody style={{ backgroundColor: "#f8f9fa" }}>
-			<Card className="mt-4 p-3" style={{ backgroundColor: "none", border: "none" }}>
-				<CardTitle className="mb-3 text-center">
-						Add New List
-					</CardTitle>
+			<Card className="mt-4 p-3" style={{ backgroundColor: "inherit", border: "none" }}>
 				<CardBody>
 					<CustomForm ref={ref} fields={fields} validationSchema={listSchema} onSubmit={handleAddList} onError={handleError} defaultValues={{ title: "" }} submitLabel="Add" name="AddList" />
 				</CardBody>
 			</Card>
 		</ModalBody>
-		
-		<ModalFooter>
-			<Button variant="secondary" onClick={onHide}>
-			Cancel
-			</Button>
-		</ModalFooter>
 	</Modal>)
 }
 

@@ -53,8 +53,8 @@ const BoardPage = () => {
 
 	const onDragEnd = useCallback((result) => {
 
-		console.log('onDragEnd result :', result);
-		const { destination, source, draggableId, type } = result;
+		if (import.meta.env.DEV) console.log("onDragEnd :", result);
+		const { destination, source, type } = result;
 
 		if (!destination) return;
 
@@ -65,7 +65,6 @@ const BoardPage = () => {
 			// if (source.index === destination.index) return;
 
 			const newOrder = reorderArray(lists, source.index, destination.index);
-			// console.log("newOrder onDrag :", newOrder);
 
 			const payload = newOrder.map((l, idx) => ({ _id: l._id, position: idx }));
 
@@ -85,8 +84,7 @@ const BoardPage = () => {
 			if (srcListID === destListID) {
 				
 				const newOrder = reorderArray(sourceTasks, source.index, destination.index);
-
-				// console.log("new order tasks same list :", newOrder);
+				
 				const updates = newOrder.map((t, idx) => ({ _id: t._id, listID: srcListID, position: idx}));
 
 				dispatch(reorderTaskLocal(updates));

@@ -1,8 +1,14 @@
 import * as yup from "yup";
 import { forwardRef } from "react";
 
+import { useDispatch } from "react-redux";
+
 import { CustomForm } from "@/components/form";
-const ListEditForm = forwardRef(({ list, onSubmit }, ref) => {
+import { updateList } from "@/app/features/lists/listSlice.js";
+
+const ListEditForm = forwardRef(({ list, onSave }, ref) => {
+
+	const dispatch = useDispatch();
 
 	const listFields = [
 		{
@@ -16,17 +22,24 @@ const ListEditForm = forwardRef(({ list, onSubmit }, ref) => {
 		title: yup.string().required("Title is required"),
 	});
 
-	return (<CustomForm 
-				ref={ref} 
-				fields={listFields}
-				validationSchema={listSchema} 
-				defaultValues={{ title: list.title }} 
-				submitLabel="Save"
-				onSubmit={onSubmit}
-				name={`EditListForm`}
-				onError={errors => console.log("List Edit Form Errors :", errors)}
-				submitInside={false}
-			/>)
+	const handleSave = async (data) => {
+
+		try {
+			await dispatch(updateList({ id: list._id, title: data.title })).unwrap();
+			ref.current.resetForm();
+			onSave();
+		} catch (error) {
+			
+			window.alert(error || "Update failed. Please try again.");
+		}
+	};
+
+	const handleError = errors => {
+
+		console.log("List Column Errors :", errors);
+	};
+
+	return ( <CustomForm ref={ref} fields={listFields} validationSchema={listSchema} onSubmit={handleSave} onError={handleError} defaultValues={{ title: list.title }} submitLabel="Save" name="EditList" submitInside={true} />)
 	
 } );
 

@@ -44,3 +44,16 @@ body{
 .hide-scrollbar::-webkit-scrollbar {
   display: none;                /* Chrome, Safari */
 }
+
+.btn-icon{
+  text-decoration: none !important;
+  font-weight: bolder !important;
+}
+
+.x-btn{
+  color: #dc3545 !important;
+}
+
+.edit-btn{
+  color: #0d6efd !important;
+}

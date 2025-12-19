@@ -1,5 +1,6 @@
 import axios from "axios";
 import { triggerLogout } from "@/app/logoutHandler.js";
+import notify from "../utils/notify";
 
 const API = axios.create({
 	
@@ -45,21 +46,26 @@ API.interceptors.response.use(res => {
 	
 	const original = error.config;
 
-	console.error("API Error :", {
-		url: original?.url,
-		method: original?.method,
-		status: error.response?.status,	
-		data: error.response?.data,
-	});
+	if (import.meta.env.DEV) {
+	
+		console.error("API Error :", {
+			url: original?.url,
+			method: original?.method,
+			status: error.response?.status,	
+			data: error.response?.data,
+		});
+	}
+
+	if (error.code === "ERR_NETWORK") {
+
+		notify.warn("Back-end is down", { position: "top-center", autoClose: 2000, hideProgressBar: true });
+	}
 
 	const skipRefreshUrls = ['/auth/login', '/auth/register', '/auth/refresh-token', '/auth/logout'];
 
 	const isSkipRefresh = skipRefreshUrls.some(url => original.url.includes(url));
-
-	// if (original.url.includes('/auth/login') || original.url.includes('/auth/register') || original.url.includes('/auth/refresh-token')) {
 	
 	if (isSkipRefresh) {
-
 		return Promise.reject(error);
 	}
 
@@ -79,7 +85,7 @@ API.interceptors.response.use(res => {
 			return Promise.reject(refreshError);
 		}
 	}
-
+	
 	return Promise.reject(error);
 });
 

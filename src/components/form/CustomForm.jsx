@@ -39,10 +39,14 @@ const CustomForm = forwardRef(
 
 	const handleError = errors => {
 
-		if (onError) {
-			onError(errors);
-		} else {
-			console.log("Form errors :", errors);
+		if (import.meta.env.DEV) {
+			if (onError) {
+						
+				onError(errors);
+			} else {
+			
+				console.log("Form errors :", errors);
+			}
 		}
 	};
 
@@ -77,7 +81,7 @@ const CustomForm = forwardRef(
 						</FormText>
 					) }
 					
-					{ submitInside && (<SubmitButton variant="primary" label={submitLabel} name={name} />) }
+					{ submitInside && (<SubmitButton variant="primary" label={submitLabel} name={name} type="inside" />) }
 					</FormGroup>
 				)
 			}

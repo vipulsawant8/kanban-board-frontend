@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { createTask } from "@/app/features/tasks/taskSlice.js";
 
 import { CustomForm } from "@/components/form";
+import notify from "../../utils/notify";
 
 const taskFields = [
 	{
@@ -36,12 +37,14 @@ const ListAddTask = ({ listID }) => {
 
 		try {
 			const result = await dispatch(createTask({ listID, ...data })).unwrap();
-			console.log('result :', result);
+			if (import.meta.env.DEV) console.log('result :', result);
+			notify.success("Task Added Successfully");
 			formRef.current.resetForm();
 			setAdding(false);
 		} catch (error) {
 		
-			window.alert(error || "Create task failed. Please try again.");
+			const msg = error || "Create task failed. Please try again.";
+			notify.error(msg);
 		}
 	};
 
@@ -57,12 +60,12 @@ const ListAddTask = ({ listID }) => {
 	)
 		
 	return (
-		<>
+		<div  className="d-flex align-items-end">
 			<CustomForm ref={formRef} validationSchema={taskSchema} fields={taskFields} defaultValues={{ title: "", description: "" }} onSubmit={handleSave} submitLabel="Save" name="Add-Task" onError={handleError} />
-			<Button size="sm" variant="outline-danger" className="mt-2"  onClick={() => setAdding(false)}>
-				Cancel
+			<Button size="sm" variant="link" className="mt-2 btn-icon x-btn"  onClick={() => setAdding(false)}>
+				X
 			</Button>
-		</>
+		</div>
 	)
 };
 

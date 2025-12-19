@@ -1,21 +1,24 @@
-import { Navbar, Container, Nav, NavbarBrand } from "react-bootstrap"
+import { Navbar, Container, Nav, NavbarBrand, NavbarToggle, NavbarCollapse, NavDropdown, DropdownItem } from "react-bootstrap"
 import { useSelector } from "react-redux";
 import { LogoutButton } from "@/components/auth";
 
 const NavbarComponent = () => {
 
-	const { user, isAuthenticated } = useSelector(state => state.auth);
+	const isAuthenticated  = useSelector(state => state.auth.isAuthenticated);
 
 	if (!isAuthenticated) return;
 
   return (
-	<Navbar bg="dark" expand="lg" className="mb-3 shadow-sm">
+	<Navbar bg="dark" variant="dark" expand="lg" className="mb-3 shadow-sm">
 		<Container fluid>
-			<NavbarBrand style={{fontWeight: 600}} className="text-light"> Live Poll </NavbarBrand>
-			<Nav className="ms-auto align-items-center gap-3">
-				<span className="text-light font-bold"> Welcome, {user.name} </span> && <LogoutButton />
-				
-			</Nav>
+			<NavbarBrand className="fw-semibold"> Live Poll </NavbarBrand>
+			<Navbar.Toggle aria-controls="main-navbar" />
+				<Navbar.Collapse id="main-navbar">
+					<Nav  className="ms-lg-auto">
+						<Nav.Item> <LogoutButton /> </Nav.Item>
+						{/* <LogoutButton /> */}
+					</Nav>
+				</Navbar.Collapse>
 		</Container>
 	</Navbar>
   );

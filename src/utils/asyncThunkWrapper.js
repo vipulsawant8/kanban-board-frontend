@@ -1,3 +1,5 @@
+import notify from "./notify.js";
+
 const asyncThunkWraper = async (apiCall, thunkAPI) => {
 
 	try {
@@ -6,7 +8,8 @@ const asyncThunkWraper = async (apiCall, thunkAPI) => {
 		return res.data;
 	} catch (error) {
 		
-		return thunkAPI.rejectWithValue(error.response?.data?.message  || error.message || 'Something failed');
+		const msg = error.response?.data?.message || error.message || "Something Failed";
+		return thunkAPI.rejectWithValue(msg);
 	}
 };
 

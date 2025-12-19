@@ -1,5 +1,5 @@
 ![Vercel](https://vercelbadge.vercel.app/api/vipulsawant8/kanban-board-task-management-app-frontend)
-![CI](https://github.com/vipulsawant8/kanban-board-tasks-manager/actions/workflows/vercel-deploy.yml/badge.svg)
+![CI](https://github.com/vipulsawant8/kanban-board-task-management-app-frontend/actions/workflows/vercel-deploy.yml/badge.svg)
 
 # Kanban Board — Task Management App
 
@@ -118,5 +118,5 @@ Password: Demo@1234
 
 ## Notes for Reviewers
 
-This project is intended for demonstration and interview purposes only.
-All data is mock data. No real user information is stored.
+The demo board uses fictional names (e.g., Justice League, Superman)
+purely for demonstration purposes.
