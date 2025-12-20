@@ -76,7 +76,6 @@ const taskSlice = createSlice({
 		.addCase(persistReorderTasks.rejected, (state, action) => {
 			
 			state.error = action.payload.message;
-			state.loading = true
 		});
 	}
 });

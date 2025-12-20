@@ -79,7 +79,6 @@ const listSlice = createSlice({
 		.addCase(persistReorderLists.rejected, (state, action) => {
 			
 			state.error = action.payload.message;
-			state.loading = true;
 		});
 	}
 });
