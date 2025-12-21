@@ -33,7 +33,7 @@ const RegisterForm = ({ onSubmit, onError, loading, ref }) => {
 		ref={ref}
 		fields={fields}
 		validationSchema={schema}
-		submitLabel={loading ? "Registering..." : "Register"}
+		submitLabel={"Register"}
 		onSubmit={onSubmit}
 		onError={onError}
 		name="loginForm" /> );

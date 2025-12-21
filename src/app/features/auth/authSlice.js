@@ -80,7 +80,7 @@ const authSlice = createSlice({
 
 			state.loading = false;
 			state.isAuthenticated = true;
-			const { user, accessToken } = action.payload.data;
+			const { user } = action.payload.data;
 			state.user = user;
 			state.error = null;
 		})

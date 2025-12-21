@@ -12,7 +12,7 @@ import notify from "@/utils/notify.js";
 const LoginPage = () => {
 
 	const formRef = useRef();
-	const { loading, isAuthenticated } = useSelector((state) => state.auth);
+	const { isAuthenticated } = useSelector((state) => state.auth);
 	
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -48,8 +48,7 @@ const LoginPage = () => {
 							<LoginForm 
 								ref={formRef}
 								onSubmit={handleLogin}
-								onError={handleError}
-								loading={loading} s/>
+								onError={handleError} />
 							<div className="mt-4"> New user? click <Link to={'/register'}> here </Link> to register.</div>
 						</CardBody>
 					</Card>

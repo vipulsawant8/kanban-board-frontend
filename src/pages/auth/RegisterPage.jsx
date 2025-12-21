@@ -14,7 +14,7 @@ const RegisterPage = () => {
 	const formRef = useRef();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const { loading, isAuthenticated } = useSelector((state) => state.auth);
+	const { isAuthenticated } = useSelector((state) => state.auth);
 
 	const handleRegister = async (data) => {
 			try {
@@ -25,8 +25,6 @@ const RegisterPage = () => {
 				const payload = { identity: data.email, password: data.password };
 	
 				await dispatch(loginUser(payload)).unwrap();
-
-				notify.success("Logged-in Successfully");
 	
 				formRef.current.resetForm();
 			} catch (error) {
@@ -57,7 +55,6 @@ const RegisterPage = () => {
 						<RegisterForm 
 							ref={formRef}
 							onSubmit={handleRegister}
-							loading={loading}
 							onError={handleError} />
 						<div className="mt-4"> Already user? click <Link to={'/login'}> here </Link> to login.</div>
 					</CardBody>
