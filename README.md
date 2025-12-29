@@ -111,7 +111,7 @@ This environment exists only for UI and UX evaluation.
 
 A demo account is provided:
 
-- **Email:** demo.user@notes.test
+- **Email:** demo.user@kanban.test
 
 - **Password:** Demo@1234
 
