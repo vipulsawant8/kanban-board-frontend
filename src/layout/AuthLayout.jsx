@@ -10,7 +10,7 @@ const AuthLayout = () => {
 
 	if (!isAuthenticated) return <Navigate to={'/login'} replace />;
 
-	return <Container fluid="md"> <Outlet /> </Container>;
+	return ( <Outlet /> );
 }
 
 export default AuthLayout;

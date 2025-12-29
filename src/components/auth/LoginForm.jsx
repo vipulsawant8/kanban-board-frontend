@@ -28,7 +28,7 @@ const LoginForm = forwardRef(({ onSubmit, onError, loading }, ref ) => {
 		ref={ref}
 		fields={fields}
 		validationSchema={schema}
-		submitLabel={"Login"}
+		submitLabel={loading ? "Logging..." : "Login"}
 		onSubmit={onSubmit}
 		onError={onError}
 		name="loginForm" /> );

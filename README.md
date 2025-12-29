@@ -1,78 +1,241 @@
-![Vercel](https://vercelbadge.vercel.app/api/vipulsawant8/kanban-board-task-management-app-frontend)
-![CI](https://github.com/vipulsawant8/kanban-board-task-management-app-frontend/actions/workflows/ci.yml/badge.svg)
+# Kanban Board — Frontend (React + Redux)
 
-# Kanban Board — Task Management App (Frontend)
+[![Vercel](https://img.shields.io/badge/vercel-deployed-success?logo=vercel&logoColor=white)](https://notes-app-front-end.vercel.app)
+![License](https://img.shields.io/github/license/vipulsawant8/notes-app-frontend)
+![React](https://img.shields.io/badge/react-19.x-blue)
+![Redux Toolkit](https://img.shields.io/badge/redux-toolkit-purple)
+![Vite](https://img.shields.io/badge/vite-build-646CFF)
 
-A Kanban board frontend built with React and Redux Toolkit, featuring authentication,
-drag & drop, and optimistic UI updates.  
-Designed to demonstrate scalable frontend architecture and real-world state management patterns.
 
-> Frontend-only repository.  
-> Communicates with a backend via REST APIs using **HTTP-only cookie authentication**.
+**Live App:** https://kanban-board-front-end.vercel.app
 
----
+Frontend for a Kanban Board application, built with React, Redux Toolkit, and Vite.
 
-## Key Features
-- Create, edit, delete lists and tasks
-- Drag & drop reordering (lists and tasks)
-- Cross-list task movement
-- Optimistic UI updates with async persistence
-- Authentication with protected routes and auto session restore
-- Reusable form system using `react-hook-form`
+This application demonstrates authentication-aware UI, layout-based route protection, and ordered task workflows, integrating with a separately deployed backend API.
 
----
+## Architecture Overview
 
-## Tech Stack
-React · Vite · Redux Toolkit · React Router · React-Bootstrap · Axios · @hello-pangea/dnd
+The frontend is designed to stay UI-focused, with security and session handling delegated to the backend.
 
----
+Key responsibilities:
 
-## Architecture Highlights
-- Feature-based folder structure for scalability
-- Normalized Redux state for lists and tasks
-- Centralized Axios instance with auth handling
-- Drag & drop reorder logic isolated in utilities
+- Rendering authenticated and public views
 
----
+- Managing global UI state using Redux Toolkit
 
-## Setup
+- Orchestrating API communication via Axios
+
+- Handling session expiry and forced logout gracefully
+
+Authentication secrets are never stored on the client.
+
+## Authentication & Session Handling
+
+This frontend uses a cookie-based session model provided by the backend.
+
+### Key characteristics
+
+- Tokens are stored in HTTP-only cookies (server-managed)
+
+- Redux stores user identity and auth state only
+
+- No access or refresh tokens are stored in localStorage or Redux
+
+### Session lifecycle
+
+1. On app load, auth state is restored via /auth/me
+
+2. Protected routes are guarded using layout-based access control
+
+3. Axios interceptors automatically retry requests after token refresh
+
+4. If refresh fails, the user is logged out globally
+
+## Routing & Access Control
+
+Routing is layout-driven, not page-driven.
 
 ```bash
-npm install
-cp .env.example .env
-npm run dev
+/login, /register
+ └── PublicLayout
+
+/board
+ └── AuthLayout (protected)
+     └── Lists
+	 └── Tasks
 ```
 
----
+## Design decisions
 
-## Environment Variables
+- Public and authenticated routes are structurally separated
 
-Create a `.env` file using the provided example:
+- Auth checks live in layouts, not inside pages
+
+- Pages remain focused on rendering and interaction logic
+
+- Route-level lazy loading improves performance
+
+## Features
+
+- Login / register / logout flow
+
+- Protected routes using layout guards
+
+- Kanban lists and tasks
+
+- Create / update / delete lists
+
+- Create / update / delete tasks
+
+- Task reordering within a list
+
+- Task movement across lists
+
+- Ordered task rendering
+
+- Centralized toast notifications
+
+## Demo Environment (For Reviewers)
+
+To simplify evaluation:
+
+- Demo accounts may be used for testing
+
+- All boards, lists, and tasks are fictional
+
+- No real user or production data is stored
+
+- Demo data may reset periodically
+
+This environment exists only for UI and UX evaluation.
+
+A demo account is provided:
+
+- **Email:** demo.user@notes.test
+
+- **Password:** Demo@1234
+
+⚠️ Important
+
+- All notes are fictional
+
+- Demo data uses fictional characters and placeholders
+
+- No real user data is stored or displayed
+
+- Demo environment may reset periodically
+
+Demo credentials are provided only for UI and UX evaluation.
+
+## Project Structure
+
+```bash
+src
+├── api
+│   └── axios.js
+├── app
+│   ├── features
+│   │   ├── auth
+│   │   │   └── authSlice.js
+│   │   ├── lists
+│   │   │   └── listSlice.js
+│   │   └── tasks
+│   │       └── taskSlice.js
+│   ├── logoutHandler.js
+│   └── store.js
+├── App.css
+├── App.jsx
+├── assets
+│   ├── logo.png
+│   └── react.svg
+├── components
+│   ├── auth
+│   │   ├── AuthInitializer.jsx
+│   │   ├── index.js
+│   │   ├── LoginForm.jsx
+│   │   ├── LogoutButton.jsx
+│   │   └── RegisterForm.jsx
+│   ├── common
+│   │   └── PageLoader.jsx
+│   ├── form
+│   │   ├── CustomForm.jsx
+│   │   ├── index.js
+│   │   ├── InputCheckbox.jsx
+│   │   ├── InputFile.jsx
+│   │   ├── InputSelect.jsx
+│   │   ├── InputText.jsx
+│   │   ├── InputTextarea.jsx
+│   │   └── SubmitButton.jsx
+│   ├── lists
+│   │   ├── AddList.jsx
+│   │   ├── index.js
+│   │   ├── ListAddTask.jsx
+│   │   ├── ListColumn.jsx
+│   │   ├── ListDeleteModal.jsx
+│   │   ├── ListEditForm.jsx
+│   │   ├── ListHeader.jsx
+│   │   └── ListTasks.jsx
+│   ├── navbar
+│   │   └── NavbarComponent.jsx
+│   └── tasks
+│       ├── DeleteTaskModal.jsx
+│       ├── index.js
+│       ├── TaskEditForm.jsx
+│       └── TaskItem.jsx
+├── config
+│   └── toast.config.js
+├── index.css
+├── layout
+│   ├── AppLayout.jsx
+│   ├── AuthLayout.jsx
+│   └── PublicLayout.jsx
+├── main.jsx
+├── middleware
+│   └── errorMiddleware.js
+├── pages
+│   ├── auth
+│   │   ├── LoginPage.jsx
+│   │   └── RegisterPage.jsx
+│   ├── board
+│   │   └── BoardPage.jsx
+│   └── NotFound.jsx
+├── router
+│   └── router.jsx
+└── utils
+    ├── asyncThunkWrapper.js
+    ├── notify.js
+    └── reorder.js
+```
+
+## Environment Configuration
+
+Create a local environment file:
 
 ```bash
 cp .env.example .env
 ```
 
-Required variable:
+### Required variable:
 
-```env
-VITE_API_URL=http://localhost:4000
-```
+- VITE_API_URL — backend API base URL
 
-> `.env` files are ignored by Git. Never commit secrets.
+No secrets are stored in the frontend.
 
----
+## Backend Integration
 
-## Demo Credentials
+This frontend communicates with a separately deployed backend API.
 
-Email: `demo.user@kanban.test`  
-Password: `Demo@1234`
+- Backend Repository: https://github.com/vipulsawant8/kanban-board-backend
 
-⚠️ Mock data only. Reset periodically.
+- Backend Deployment: Render
 
----
+- Auth Strategy: Cookie-based sessions with automatic refresh
 
-## Notes for Reviewers
+## License
 
-The demo board uses fictional names (e.g., Justice League, Superman)
-purely for demonstration purposes.
+This project is licensed under the MIT License.
+
+## Final note
+
+This frontend is designed for portfolio demonstration and technical evaluation.
+It is not intended for real user data or production use.

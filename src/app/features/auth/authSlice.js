@@ -40,7 +40,7 @@ const authSlice = createSlice({
 		builder
 		.addCase(getMe.pending, (state) => {
 
-			state.loading = true;
+			state.loading = false;
 			state.error = null;
 		})
 		.addCase(getMe.fulfilled, (state, action) => {
@@ -80,7 +80,7 @@ const authSlice = createSlice({
 
 			state.loading = false;
 			state.isAuthenticated = true;
-			const { user } = action.payload.data;
+			const user = action.payload.data;
 			state.user = user;
 			state.error = null;
 		})

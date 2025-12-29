@@ -5,9 +5,11 @@ import { Container } from "react-bootstrap";
 const AppLayout = () => {
 
 	return ( <> 
-		<NavbarComponent />
-		<Container fluid="md" className="py-3">
-			<Outlet />
+		<Container fluid className="p-0">
+			<NavbarComponent />
+			<Container fluid="lg" className="py-3">
+				<Outlet />
+			</Container>
 		</Container>
 	</> );
 };
