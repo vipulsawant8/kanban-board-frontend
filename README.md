@@ -1,6 +1,6 @@
 # Kanban Board — Frontend (React + Redux)
 
-[![Vercel](https://img.shields.io/badge/vercel-deployed-success?logo=vercel&logoColor=white)](https://notes-app-front-end.vercel.app)
+[![Vercel](https://img.shields.io/badge/vercel-deployed-success?logo=vercel&logoColor=white)](https://kanban-board-front-end.vercel.app)
 ![License](https://img.shields.io/github/license/vipulsawant8/notes-app-frontend)
 ![React](https://img.shields.io/badge/react-19.x-blue)
 ![Redux Toolkit](https://img.shields.io/badge/redux-toolkit-purple)
