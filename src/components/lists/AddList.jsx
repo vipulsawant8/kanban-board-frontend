@@ -28,7 +28,7 @@ const AddList = ({ show, onHide, ref }) => {
 			const result = await dispatch(createList(data.title)).unwrap();
 			if (import.meta.env.DEV) console.log('result :', result);
 			
-			notify.success("List Addedd Successfully");
+			notify.success(`List titled ${data.title} Added`);
 
 			ref.current.resetForm();
 			onHide();

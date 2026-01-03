@@ -5,6 +5,7 @@ import { deleteTask, updateTask } from "@/app/features/tasks/taskSlice.js";
 
 import { TaskEditForm } from "@/components/tasks";
 import DeleteTaskModal from "./DeleteTaskModal";
+import notify from "../../utils/notify";
 
 const TaskItem = ({ task }) => {
 
@@ -18,6 +19,7 @@ const TaskItem = ({ task }) => {
 		try {
 			const result = await dispatch(updateTask({ id: task._id, ...data })).unwrap();
 
+			notify.success(`Task titled ${data.title} Updated`)
 			formRef.current.resetForm();
 			setEditing(false);
 		} catch (error) {

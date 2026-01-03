@@ -18,7 +18,7 @@ const RegisterPage = () => {
 
 	const handleRegister = async (data) => {
 			try {
-				await dispatch(registerUser(data));
+				await dispatch(registerUser(data)).unwrap();
 	
 				notify.success("Registered successfully now logging you in");
 	

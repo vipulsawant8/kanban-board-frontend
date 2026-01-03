@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { Modal, ModalHeader, ModalTitle, ModalFooter, Button } from "react-bootstrap";
 import { deleteTask } from "../../app/features/tasks/taskSlice.js";
+import notify from "../../utils/notify.js";
 
 const DeleteTaskModal = ({ show, onHide, task }) => {
 	
@@ -9,6 +10,7 @@ const DeleteTaskModal = ({ show, onHide, task }) => {
 	const handleDelete = async () => {
 		try {
 				await dispatch(deleteTask(task._id)).unwrap();
+				notify.success(`Task titled ${task.title} Deleted`);
 				onHide();
 			} catch (error) {
 				

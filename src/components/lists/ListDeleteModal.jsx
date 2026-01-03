@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { Modal, ModalHeader, ModalTitle, ModalFooter, Button } from "react-bootstrap";
 import { deleteList } from "../../app/features/lists/listSlice.js";
+import notify from "../../utils/notify.js";
 
 const ListDeleteModal = ({ show, onHide, list }) => {
 	
@@ -9,6 +10,7 @@ const ListDeleteModal = ({ show, onHide, list }) => {
 	const handleDelete = async () => {
 		try {
 				await dispatch(deleteList(list._id)).unwrap();
+				notify.success(`List titled ${list.title} Deleted`);
 				onHide();
 			} catch (error) {
 				

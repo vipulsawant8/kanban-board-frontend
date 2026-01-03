@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 
 import { CustomForm } from "@/components/form";
 import { updateList } from "@/app/features/lists/listSlice.js";
+import notify from "../../utils/notify";
 
 const ListEditForm = forwardRef(({ list, onSave }, ref) => {
 
@@ -26,11 +27,13 @@ const ListEditForm = forwardRef(({ list, onSave }, ref) => {
 
 		try {
 			await dispatch(updateList({ id: list._id, title: data.title })).unwrap();
+			notify.success(`List titled ${data.title} Updated`);
 			ref.current.resetForm();
 			onSave();
 		} catch (error) {
 			
-			window.alert(error || "Update failed. Please try again.");
+			const msg = error || "Update failed. Please try again.";
+			notify.error(msg);
 		}
 	};
 
