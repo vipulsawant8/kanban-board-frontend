@@ -14,7 +14,8 @@ const DeleteTaskModal = ({ show, onHide, task }) => {
 				onHide();
 			} catch (error) {
 				
-				window.alert(error || "Delete failed. Please try again.");
+				const msg = error || "Delete failed. Please try again.";
+				notify.error(msg);
 			}	
 	};
 

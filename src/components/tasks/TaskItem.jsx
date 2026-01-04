@@ -23,8 +23,9 @@ const TaskItem = ({ task }) => {
 			formRef.current.resetForm();
 			setEditing(false);
 		} catch (error) {
-		
-			window.alert(error || "Update failed. Please try again.");
+				
+				const msg = error || "Delete failed. Please try again.";
+				notify.error(msg);
 		}
 	};
 

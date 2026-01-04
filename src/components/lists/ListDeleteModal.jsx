@@ -14,7 +14,8 @@ const ListDeleteModal = ({ show, onHide, list }) => {
 				onHide();
 			} catch (error) {
 				
-				window.alert(error || "Delete failed. Please try again.");
+				const msg = error || "Delete failed. Please try again.";
+				notify.error(msg);
 			}	
 	};
 
