@@ -5,7 +5,7 @@ import '@/App.css'
 import { useEffect } from "react";
 import { setLogoutHandler } from "@/app/logoutHandler";
 import { useDispatch } from "react-redux";
-import { clearAuth } from "@/app/features/auth/authSlice";
+import { logoutUser } from "@/app/features/auth/authSlice.js";
 
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from 'react-toastify';
@@ -16,7 +16,7 @@ function App() {
 
 	useEffect(() => {
 		setLogoutHandler(() => {
-			dispatch(clearAuth());
+			dispatch(logoutUser());
 		});
 	}, [dispatch]);
 

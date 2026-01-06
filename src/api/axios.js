@@ -81,7 +81,9 @@ API.interceptors.response.use(res => {
 		} catch (refreshError) {
 	
 			triggerLogout();
-			console.error("Token refresh failed. Redirecting to login.", refreshError);
+			if (import.meta.env.DEV) {
+				console.error("Token refresh failed. Redirecting to login.", refreshError);
+			}
 			return Promise.reject(refreshError);
 		}
 	}
