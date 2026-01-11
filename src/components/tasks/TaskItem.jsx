@@ -18,8 +18,9 @@ const TaskItem = ({ task }) => {
 
 		try {
 			const result = await dispatch(updateTask({ id: task._id, ...data })).unwrap();
-
-			notify.success(`Task titled ${data.title} Updated`)
+			if (import.meta.env.DEV) console.log('result :', result);
+			const msg = result.message || `Task "${data.title}" was updated`;
+			notify.success(msg)
 			formRef.current.resetForm();
 			setEditing(false);
 		} catch (error) {

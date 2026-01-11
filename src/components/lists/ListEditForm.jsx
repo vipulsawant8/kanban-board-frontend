@@ -26,13 +26,14 @@ const ListEditForm = forwardRef(({ list, onSave }, ref) => {
 	const handleSave = async (data) => {
 
 		try {
-			await dispatch(updateList({ id: list._id, title: data.title })).unwrap();
-			notify.success(`List titled ${data.title} Updated`);
+			const result = await dispatch(updateList({ id: list._id, title: data.title })).unwrap();
+			const msg = result.message || `List "${data.title}" was updated`;
+			notify.success(msg);
 			ref.current.resetForm();
 			onSave();
 		} catch (error) {
 			
-			const msg = error || "Update failed. Please try again.";
+			const msg = error || "List Update failed. Please try again.";
 			notify.error(msg);
 		}
 	};

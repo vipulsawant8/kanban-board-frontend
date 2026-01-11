@@ -38,7 +38,8 @@ const ListAddTask = ({ listID }) => {
 		try {
 			const result = await dispatch(createTask({ listID, ...data })).unwrap();
 			if (import.meta.env.DEV) console.log('result :', result);
-			notify.success(`Task titled ${data.title} Added`);
+			const msg = result.message || `Task "${data.title}" was created`;
+			notify.success(msg);
 			formRef.current.resetForm();
 			setAdding(false);
 		} catch (error) {

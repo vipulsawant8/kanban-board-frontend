@@ -9,12 +9,14 @@ const ListDeleteModal = ({ show, onHide, list }) => {
 
 	const handleDelete = async () => {
 		try {
-				await dispatch(deleteList(list._id)).unwrap();
-				notify.success(`List titled ${list.title} Deleted`);
+				const result = await dispatch(deleteList(list._id)).unwrap();
+				if (import.meta.env.DEV) console.log('result :', result);
+				const msg = result.message || `List "${list.title}" was deleted`;
+				notify.success(msg);
 				onHide();
 			} catch (error) {
 				
-				const msg = error || "Delete failed. Please try again.";
+				const msg = error || "List Delete failed. Please try again.";
 				notify.error(msg);
 			}	
 	};

@@ -9,12 +9,14 @@ const DeleteTaskModal = ({ show, onHide, task }) => {
 
 	const handleDelete = async () => {
 		try {
-				await dispatch(deleteTask(task._id)).unwrap();
-				notify.success(`Task titled ${task.title} Deleted`);
+				const result = await dispatch(deleteTask(task._id)).unwrap();
+				if (import.meta.env.DEV) console.log('result :', result);
+				const msg = result.message || `Task "${task.title}" was deleted`;
+				notify.success(msg);
 				onHide();
 			} catch (error) {
 				
-				const msg = error || "Delete failed. Please try again.";
+				const msg = error || "Task Delete failed. Please try again.";
 				notify.error(msg);
 			}	
 	};
