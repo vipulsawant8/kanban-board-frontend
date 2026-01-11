@@ -7,7 +7,6 @@ import taskReducer from "@/app/features/tasks/taskSlice.js";
 import errorMiddleware from "@/middleware/errorMiddleware.js";
 import { createLogger } from "redux-logger";
 
-console.log("Environment :", import.meta.env);
 const logger = createLogger({
 	level: 'info',
 	collapsed: true
