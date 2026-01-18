@@ -1,6 +1,7 @@
 import axios from "axios";
 import { triggerLogout } from "@/app/logoutHandler.js";
-import notify from "../utils/notify";
+import notify from "@/utils/notify";
+import { getDeviceId } from "@/utils/deviceId.js";
 
 const API = axios.create({
 	
@@ -75,7 +76,9 @@ API.interceptors.response.use(res => {
 
 		try {
 			
-			await API.get('/auth/refresh-token');
+			await API.post('/auth/refresh-token', {
+				deviceId: getDeviceId()
+			});
 
 			return API(original);
 		} catch (refreshError) {
