@@ -51,7 +51,7 @@ const ListAddTask = ({ listID }) => {
 
 	const handleError = errors => {
 
-		console.log("errors :", errors);
+		 if (import.meta.env.DEV) console.log("errors :", errors);
 	}
 
 	if (!adding) return (

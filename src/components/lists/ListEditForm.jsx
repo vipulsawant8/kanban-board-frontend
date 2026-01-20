@@ -40,7 +40,7 @@ const ListEditForm = forwardRef(({ list, onSave }, ref) => {
 
 	const handleError = errors => {
 
-		console.log("List Column Errors :", errors);
+		 if (import.meta.env.DEV) console.log("List Column Errors :", errors);
 	};
 
 	return ( <CustomForm ref={ref} fields={listFields} validationSchema={listSchema} onSubmit={handleSave} onError={handleError} defaultValues={{ title: list.title }} submitLabel="Save" name="EditList" submitInside={true} />)

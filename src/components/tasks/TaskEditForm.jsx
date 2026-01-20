@@ -30,7 +30,7 @@ const TaskEditForm = forwardRef(({ task, onSubmit }, ref) => {
 			submitLabel="Save"
 			onSubmit={onSubmit}
 			name={`EditTaskForm`}
-			onError={errors => console.log("Task Edit Form Errors :", errors)}
+			onError={errors => {if (import.meta.env.DEV) console.log("Task Edit Form Errors :", errors)}}
 		/>
 	);
 })	
