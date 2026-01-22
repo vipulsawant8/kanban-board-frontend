@@ -57,3 +57,17 @@ body{
 .edit-btn{
   color: #0d6efd !important;
 }
+
+.mobile-toast {
+  margin: 0;
+}
+
+/* Mobile spacing */
+@media (max-width: 768px) {
+  .mobile-toast {
+    width: auto !important;
+    margin-top: 16px !important;
+    margin-left: 16px !important;
+    margin-bottom: 16px !important;
+  }
+}

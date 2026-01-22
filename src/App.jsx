@@ -23,7 +23,7 @@ function App() {
 	return ( <>
 		<AuthInitializer />
 		<RouterProvider router={router} />
-		<ToastContainer autoClose={2500} position='top-right' />
+		<ToastContainer autoClose={2500} position='top-right' className="mobile-toast" />
 	</> );
 };
 
