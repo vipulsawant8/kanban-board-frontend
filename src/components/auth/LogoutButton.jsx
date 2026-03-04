@@ -12,7 +12,7 @@ const LogoutButton = () => {
 		try {
 			
 			const logout = await dispatch(logoutUser()).unwrap();
-			const msg = "Logged-out successfully";
+			const msg = "Logged-out Successfully";
 			notify.success(msg);
 		} catch (error) {
 			
@@ -22,7 +22,7 @@ const LogoutButton = () => {
 	};
 
   return (
-	<Button variant="outline-danger" size="sm" onClick={handleLogout}> Logout </Button>
+	<Button variant="outline-danger" className="align-self-start" onClick={handleLogout}> Logout </Button>
   );
 };
 

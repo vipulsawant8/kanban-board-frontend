@@ -1,7 +1,6 @@
 import axios from "axios";
 import { triggerLogout } from "@/app/logoutHandler.js";
 import notify from "@/utils/notify";
-import { getDeviceId } from "@/utils/deviceId.js";
 
 const API = axios.create({
 	
@@ -62,7 +61,7 @@ API.interceptors.response.use(res => {
 		notify.warn("Back-end is down", { position: "top-center", autoClose: 2000, hideProgressBar: true });
 	}
 
-	const skipRefreshUrls = ['/auth/login', '/auth/register', '/auth/refresh-token', '/auth/logout'];
+	const skipRefreshUrls = ['/auth/login', '/auth/create-account',  '/auth/verify-email','/auth/refresh-token', '/auth/logout'];
 
 	const isSkipRefresh = skipRefreshUrls.some(url => original.url.includes(url));
 	
@@ -76,9 +75,7 @@ API.interceptors.response.use(res => {
 
 		try {
 			
-			await API.post('/auth/refresh-token', {
-				deviceId: getDeviceId()
-			});
+			await API.post('/auth/refresh-token');
 
 			return API(original);
 		} catch (refreshError) {

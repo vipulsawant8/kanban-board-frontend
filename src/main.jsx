@@ -6,11 +6,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import store from "@/app/store.js";
 import { Provider } from 'react-redux';
+import ErrorBoundary from '@/components/common/ErrorBoundary.jsx';
 
 createRoot(document.getElementById('root')).render(
 	<StrictMode>
-		<Provider store={store}>
-			<App />
-		</Provider>
-	</StrictMode>,
+		<ErrorBoundary>
+			<Provider store={store}>
+				<App />
+			</Provider>
+		</ErrorBoundary>
+	</StrictMode>
 );

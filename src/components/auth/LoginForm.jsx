@@ -1,8 +1,9 @@
 import { forwardRef } from "react";
 import * as yup from "yup";
 import CustomForm from "@/components/form/CustomForm.jsx";
+import { getDeviceId } from "../../utils/deviceId.js";
 
-const LoginForm = forwardRef(({ onSubmit, onError, loading }, ref ) => {
+const LoginForm = ({ onSubmit, onError, loading, ref } ) => {
 
 	const fields = [
 		{
@@ -31,7 +32,8 @@ const LoginForm = forwardRef(({ onSubmit, onError, loading }, ref ) => {
 		submitLabel={loading ? "Logging..." : "Login"}
 		onSubmit={onSubmit}
 		onError={onError}
+		defaultValues={{ deviceId: getDeviceId() }}
 		name="loginForm" /> );
-});
+};
 
 export default LoginForm;
