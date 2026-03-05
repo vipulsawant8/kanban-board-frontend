@@ -1,208 +1,164 @@
-# Kanban Board — Frontend (React + Redux)
+# Kanban Frontend
 
-[![Vercel](https://img.shields.io/badge/vercel-deployed-success?logo=vercel&logoColor=white)](https://kanban-board-front-end.vercel.app)
-![License](https://img.shields.io/github/license/vipulsawant8/notes-app-frontend)
-![React](https://img.shields.io/badge/react-19.x-blue)
-![Redux Toolkit](https://img.shields.io/badge/redux-toolkit-purple)
-![Vite](https://img.shields.io/badge/vite-build-646CFF)
+Frontend client for a **Kanban-style task management application** built with **React and Vite**.
 
+The application allows authenticated users to organize work using **custom lists and tasks**. Each list acts as a container where users can create and manage tasks.
 
-**Live App:** https://kanban-board-front-end.vercel.app
+The frontend communicates with a RESTful backend API and manages authentication, state, and user interactions.
 
-Frontend for a Kanban Board application, built with React, Redux Toolkit, and Vite.  
-This application demonstrates authentication-aware UI, layout-based route protection, and ordered task workflows, integrating with a separately deployed backend API.
+# Core Features
 
-## Architecture Overview
+* React + Vite development environment
+* Authentication with backend API
+* Create, update, and delete lists
+* Create, update, and delete tasks
+* Move tasks between lists
+* Global state management
+* Reusable UI components
+* API integration using Axios
+* Error handling and loading states
 
-The frontend is designed to stay UI-focused, with security and session handling delegated to the backend.
+# Tech Stack
 
-Key responsibilities:
-- Rendering authenticated and public views
-- Managing global UI state using Redux Toolkit
-- Orchestrating API communication via Axios
-- Handling session expiry and forced logout gracefully
-- Authentication secrets are never stored on the client.
+Frontend technologies used in this project:
 
-## Authentication & Session Handling
+* **React**
+* **Vite**
+* **Redux Toolkit**
+* **Axios**
+* **JavaScript (ES6+)**
+* **CSS**
 
-This frontend integrates with a **cookie-based authentication with refresh token rotation** provided by the backend.
+# Data Model
 
-### Key characteristics  
+The frontend works with the following structure returned from the backend API:
 
-- Tokens are stored in **HTTP-only cookies** (server-managed)
-- No access or refresh tokens are stored in localStorage or Redux
-- Redux stores only user identity and authentication state
-- A persistent `deviceId` is generated client-side to support secure multi-device sessions
+User → Lists → Tasks
 
-### Session lifecycle
+Example structure:
 
-1. On application load, authentication state is restored via `/auth/me`
-2. Protected routes are guarded using layout-based access control
-3. Axios interceptors automatically attempt token refresh on `401` responses from protected endpoints
-4. Failed refresh triggers a **global logout**
-5. Requests are retried **once** after a successful refresh to prevent loops
-
-## Routing & Access Control
-
-Routing is layout-driven, not page-driven.
-
-```bash
-/login, /register
- └── PublicLayout
-
-/board
- └── AuthLayout (protected)
-     ├── Lists
-     └── Tasks
+```id="79f9fe"
+User
+ ├── List
+ │     ├── Task
+ │     ├── Task
+ │
+ ├── List
+ │     ├── Task
+ │
+ └── List
+       ├── Task
 ```
 
-## Design decisions
+Lists are **user-defined containers**, and tasks belong to specific lists.
 
-- Public and authenticated routes are structurally separated
-- Auth checks live in layouts, not inside pages
-- Pages remain focused on rendering and interaction logic
-- Route-level lazy loading improves performance
+# Demo Account
 
-## Features
+You can use the following demo credentials to explore the application.
 
-- Login / register / logout flow
-- Protected routes using layout guards
-- Kanban lists and tasks
-- Create / update / delete lists
-- Create / update / delete tasks
-- Task reordering within a list
-- Task movement across lists
-- Ordered task rendering
-- Centralized toast notifications
+Email:
+demo.user1.chariot057@aleeas.com
 
-## Demo Environment (For Reviewers)
+Password:
+demo@1234
 
-To simplify evaluation:
+These credentials allow access to a sample account with predefined lists and tasks.
 
-- A demo account is used for demonstration.
-- All boards, lists, and tasks are fictional.
-- No real user or production data is stored.
-- Demo data may reset periodically.
+# Authentication Flow
 
-This environment exists only for UI and UX evaluation.
+1. User logs in through the login form.
+2. Backend verifies credentials and returns authentication tokens.
+3. Frontend stores authentication state in Redux.
+4. Authenticated users can access the dashboard and manage lists and tasks.
 
-A demo account is provided:
+# API Integration
 
-- **Email:** demo.user@kanban.test
-- **Password:** Demo@1234
+All API requests are handled through a centralized Axios instance.
 
-Demo credentials are provided only for UI and UX evaluation.
+Location:
 
-## Project Structure
-
-```bash
-src
-├── api
-│   └── axios.js
-├── app
-│   ├── features
-│   │   ├── auth
-│   │   │   └── authSlice.js
-│   │   ├── lists
-│   │   │   └── listSlice.js
-│   │   └── tasks
-│   │       └── taskSlice.js
-│   ├── logoutHandler.js
-│   └── store.js
-├── App.css
-├── App.jsx
-├── assets
-│   ├── logo.png
-│   └── react.svg
-├── components
-│   ├── auth
-│   │   ├── AuthInitializer.jsx
-│   │   ├── index.js
-│   │   ├── LoginForm.jsx
-│   │   ├── LogoutButton.jsx
-│   │   └── RegisterForm.jsx
-│   ├── common
-│   │   └── PageLoader.jsx
-│   ├── form
-│   │   ├── CustomForm.jsx
-│   │   ├── index.js
-│   │   ├── InputCheckbox.jsx
-│   │   ├── InputFile.jsx
-│   │   ├── InputSelect.jsx
-│   │   ├── InputText.jsx
-│   │   ├── InputTextarea.jsx
-│   │   └── SubmitButton.jsx
-│   ├── lists
-│   │   ├── AddList.jsx
-│   │   ├── index.js
-│   │   ├── ListAddTask.jsx
-│   │   ├── ListColumn.jsx
-│   │   ├── ListDeleteModal.jsx
-│   │   ├── ListEditForm.jsx
-│   │   ├── ListHeader.jsx
-│   │   └── ListTasks.jsx
-│   ├── navbar
-│   │   └── NavbarComponent.jsx
-│   └── tasks
-│       ├── DeleteTaskModal.jsx
-│       ├── index.js
-│       ├── TaskEditForm.jsx
-│       └── TaskItem.jsx
-├── config
-│   └── toast.config.js
-├── index.css
-├── layout
-│   ├── AppLayout.jsx
-│   ├── AuthLayout.jsx
-│   └── PublicLayout.jsx
-├── main.jsx
-├── middleware
-│   └── errorMiddleware.js
-├── pages
-│   ├── auth
-│   │   ├── LoginPage.jsx
-│   │   └── RegisterPage.jsx
-│   ├── board
-│   │   └── BoardPage.jsx
-│   └── NotFound.jsx
-├── router
-│   └── router.jsx
-└── utils
-    ├── asyncThunkWrapper.js
-    ├── notify.js
-    ├── deviceId.js
-    └── reorder.js
+```id="zpry3o"
+src/api/axios.js
 ```
 
-## Environment Configuration
+Responsibilities:
 
-Create a local environment file:
+* API base URL configuration
+* Request configuration
+* Error handling
+* Sending authenticated requests
 
-```bash
-cp .env.example .env
+# State Management
+
+Global state is managed using **Redux Toolkit**.
+
+State slices include:
+
+**Auth Slice**
+
+Handles:
+
+* user authentication state
+* login status
+* logout functionality
+
+**Task/List Slice**
+
+Handles:
+
+* fetching lists
+* managing tasks
+* updating tasks
+* deleting tasks
+
+# Environment Variables
+
+Create a `.env` file in the project root.
+
+Example configuration:
+
+```id="x2ovxg"
+VITE_API_BASE_URL=http://localhost:5000/api/v1
 ```
 
-### Required variable:
+# Local Development
 
-- VITE_API_URL — backend API base URL
+Install dependencies:
 
-No secrets are stored in the frontend.
+```id="5f07m5"
+npm install
+```
 
-## Backend Integration
+Start the development server:
 
-This frontend communicates with a separately deployed backend API.
+```id="jipx6u"
+npm run dev
+```
 
-- Backend Repository: https://github.com/vipulsawant8/kanban-board-backend
-- Backend Deployment: Render
-- Auth Strategy: Cookie-based authentication with refresh token rotation
-- Session Restoration: `/auth/me`
-- Device Tracking: Client-generated `deviceId`
+The application will run using **Vite's development server**.
 
-## License
+# Backend Integration
 
-This project is licensed under the MIT License.
+This frontend connects to the **Kanban Backend API**, which provides:
 
-## Final note
+* authentication endpoints
+* list management
+* task management
+* data persistence
 
-This frontend is designed for portfolio demonstration and technical evaluation.
-It is not intended for real user data or production use.
+Ensure the backend server is running before starting the frontend.
+
+# Future Improvements
+
+Possible enhancements for the application:
+
+* Drag-and-drop task movement
+* Task priority levels
+* Due dates
+* Real-time updates
+* Activity history
+* Task labels or tags
+
+# License
+
+MIT License
