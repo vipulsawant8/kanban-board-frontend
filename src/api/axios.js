@@ -30,6 +30,9 @@ API.interceptors.request.use((config) => {
 	return Promise.reject(error);
 });
 
+let isRefreshing = false;
+let refreshPromise = null;
+
 API.interceptors.response.use(res => {
 	
 	if (import.meta.env.DEV) {
@@ -75,7 +78,16 @@ API.interceptors.response.use(res => {
 
 		try {
 			
-			await API.post('/auth/refresh-token');
+			if (!isRefreshing) {
+				isRefreshing = true;
+
+				refreshPromise = API.post("/auth/refresh-token")
+					.finally(() => {
+					isRefreshing = false;
+					});
+				}
+
+				await refreshPromise;
 
 			return API(original);
 		} catch (refreshError) {

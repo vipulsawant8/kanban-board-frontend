@@ -1,163 +1,108 @@
-# Kanban Frontend
+# Kanban Board Frontend
 
-Frontend client for a **Kanban-style task management application** built with **React and Vite**.
+This project is the frontend for a Kanban task management application.
+It provides a visual Kanban board where users can create lists and
+manage tasks.
 
-The application allows authenticated users to organize work using **custom lists and tasks**. Each list acts as a container where users can create and manage tasks.
+The application connects to a backend REST API to store and retrieve
+data. Users can organize their tasks into lists and move them between
+lists using drag and drop.
 
-The frontend communicates with a RESTful backend API and manages authentication, state, and user interactions.
+# What This App Does
 
-# Core Features
+Users can:
 
-* React + Vite development environment
-* Authentication with backend API
-* Create, update, and delete lists
-* Create, update, and delete tasks
-* Move tasks between lists
-* Global state management
-* Reusable UI components
-* API integration using Axios
-* Error handling and loading states
+-   Register an account
+-   Log in
+-   Create lists (columns)
+-   Add tasks to lists
+-   Edit tasks
+-   Delete tasks
+-   Drag tasks between lists
+-   View tasks in a Kanban board layout
+
+Each user only sees their own lists and tasks.
 
 # Tech Stack
 
-Frontend technologies used in this project:
+This project uses the following technologies:
 
-* **React**
-* **Vite**
-* **Redux Toolkit**
-* **Axios**
-* **JavaScript (ES6+)**
-* **CSS**
+-   React
+-   Vite
+-   Redux Toolkit
+-   React Router
+-   Axios
+-   React Hook Form
+-   Yup validation
+-   Bootstrap / React Bootstrap
+-   React Toastify
+-   Hello Pangea DnD (drag and drop)
 
-# Data Model
+# Backend API
 
-The frontend works with the following structure returned from the backend API:
+This frontend connects to a backend API.
 
-User → Lists → Tasks
+Example API base URL:
 
-Example structure:
+/api/v1
 
-```id="79f9fe"
-User
- ├── List
- │     ├── Task
- │     ├── Task
- │
- ├── List
- │     ├── Task
- │
- └── List
-       ├── Task
+Example endpoints used:
 ```
+POST /auth/login
 
-Lists are **user-defined containers**, and tasks belong to specific lists.
+POST /auth/create-account
 
-# Demo Account
+GET /lists POST /lists
 
-You can use the following demo credentials to explore the application.
-
-Email:
-demo.user1.chariot057@aleeas.com
-
-Password:
-demo@1234
-
-These credentials allow access to a sample account with predefined lists and tasks.
-
-# Authentication Flow
-
-1. User logs in through the login form.
-2. Backend verifies credentials and returns authentication tokens.
-3. Frontend stores authentication state in Redux.
-4. Authenticated users can access the dashboard and manage lists and tasks.
-
-# API Integration
-
-All API requests are handled through a centralized Axios instance.
-
-Location:
-
-```id="zpry3o"
-src/api/axios.js
+GET /tasks POST /tasks
 ```
+# Demo Credentials
+- **Email** - `demo.user1.chariot057@aleeas.com`
+- **Password** - `demo@1234`
 
-Responsibilities:
-
-* API base URL configuration
-* Request configuration
-* Error handling
-* Sending authenticated requests
-
-# State Management
-
-Global state is managed using **Redux Toolkit**.
-
-State slices include:
-
-**Auth Slice**
-
-Handles:
-
-* user authentication state
-* login status
-* logout functionality
-
-**Task/List Slice**
-
-Handles:
-
-* fetching lists
-* managing tasks
-* updating tasks
-* deleting tasks
-
-# Environment Variables
+# Environment Setup
 
 Create a `.env` file in the project root.
 
-Example configuration:
-
-```id="x2ovxg"
-VITE_API_BASE_URL=http://localhost:5000/api/v1
+Example:
 ```
+VITE_API_URL=http://localhost:5000/api/v1
+```
+This variable is used to configure the backend API URL.
 
-# Local Development
-
-Install dependencies:
-
-```id="5f07m5"
+# Getting Started
+1.  Clone the repository
+```
+git clone `<repository-url>`{=html}
+```
+2.  Install dependencies
+```
 npm install
 ```
-
-Start the development server:
-
-```id="jipx6u"
+3.  Start the development server
+```
 npm run dev
 ```
+# Build for Production
 
-The application will run using **Vite's development server**.
+Create a production build:
+```
+npm run build
+```
+Preview the production build:
+```
+npm run preview
+```
+# Notes
 
-# Backend Integration
+This project was built for learning purposes to practice:
 
-This frontend connects to the **Kanban Backend API**, which provides:
-
-* authentication endpoints
-* list management
-* task management
-* data persistence
-
-Ensure the backend server is running before starting the frontend.
-
-# Future Improvements
-
-Possible enhancements for the application:
-
-* Drag-and-drop task movement
-* Task priority levels
-* Due dates
-* Real-time updates
-* Activity history
-* Task labels or tags
+-   React application structure
+-   State management with Redux
+-   API integration
+-   Drag and drop interfaces
+-   Form validation
+-   Mock user, lists & tasks are added for demo
 
 # License
 
