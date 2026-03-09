@@ -73,7 +73,7 @@ This variable is used to configure the backend API URL.
 # Getting Started
 1.  Clone the repository
 ```
-git clone `<repository-url>`{=html}
+git clone https://github.com/vipulsawant8/kanban-board-frontend.git
 ```
 2.  Install dependencies
 ```
