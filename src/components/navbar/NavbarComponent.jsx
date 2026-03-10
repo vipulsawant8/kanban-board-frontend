@@ -32,7 +32,7 @@ const NavbarComponent = () => {
 
         <Dropdown.Divider />
 
-        <Dropdown.Item as="button">
+        <Dropdown.Item as="div">
           <LogoutButton />
         </Dropdown.Item>
       </Dropdown.Menu>
